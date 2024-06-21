@@ -1,0 +1,122 @@
+[project]
+name = "Base-Service"
+version = "1.0.0"
+description = ""
+authors = [{ name = "Tomer Manzur", email = "manzur.tomer@gmail.com" }]
+dependencies = [
+    "fastapi>=0.100.0",
+    "httpx>=0.24.1",
+    "gunicorn>=20.1.0",
+    "uvicorn>=0.23.0",
+    "pydantic-settings>=2.0.2",
+    "uvloop>=0.17.0; platform_system != 'Windows'",
+    "asyncpg>=0.28.0",
+    "redis[hiredis]>=4.6.0",
+]
+requires-python = ">=3.11"
+readme = "README.md"
+license = { text = "MIT" }
+
+
+[tool.mypy]
+plugins = ["pydantic.mypy"]
+python_version = '3.11'
+strict = true
+exclude = ["tests", "scripts"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"
+
+[tool.ruff.lint]
+select = [
+    "A",
+    "ARG",
+    "B",
+    "C",
+    "DTZ",
+    "E",
+    "EM",
+    "F",
+    "FBT",
+    "I",
+    "ICN",
+    "ISC",
+    "N",
+    "PLC",
+    "PLE",
+    "PLR",
+    "PLW",
+    "Q",
+    "RUF",
+    "S",
+    "T",
+    "TID",
+    "UP",
+    "W",
+    "YTT",
+]
+extend-select = [
+    'RUF010',
+    'RUF100',
+    'RUF200',
+    'C90',
+    'PTH',
+    'RET',
+    'SIM',
+    'T20',
+]
+ignore = [
+    # Allow non-abstract empty methods in abstract base classes
+    "B027",
+    # Allow boolean positional values in function calls, like `dict.get(... True)`
+    "FBT003",
+    # Ignore complexity
+    "C901",
+    "PLR0911",
+    "PLR0912",
+    "PLR0913",
+    "PLR0915",
+    "ISC001",
+]
+unfixable = [
+    # Don't touch unused imports
+    "F401",
+]
+
+[tool.ruff.lint.isort]
+lines-after-imports = 2
+known-first-party = ['application']
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = 'single'
+multiline-quotes = 'double'
+
+[tool.ruff.lint.mccabe]
+max-complexity = 14
+
+[tool.ruff.lint.pep8-naming]
+classmethod-decorators = ["pydantic.model_validator"]
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "ruff>=0.0.278",
+    "mypy>=1.4.1",
+    "pytest>=7.4.0",
+    "pre-commit>=3.3.3",
+    "asgi-lifespan>=2.1.0",
+    "asyncpg-stubs>=0.28.0",
+    "types-redis>=4.6.0.2",
+]
+
+[tool.pdm.options]
+add = ["--no-self"]
+install = ["--no-self"]
+update = ["--no-self"]
+remove = ["--no-self"]
+sync = ["--no-self"]
+build = ["--no-self"]
